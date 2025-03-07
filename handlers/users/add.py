@@ -40,4 +40,10 @@ async def reg_start(message: Message, state: FSMContext):
         [id_user, url, id_task])
     con.commit()
     await message.answer('Ваша ссылка принята')
+    class_names = 'styles_wrapper__5FoK7'
+    inner_class_name = "styles_secondary__MzdEb"
+    result = parse_website(data['url'], class_names, inner_class_name)[:5]
+    with open(f'data/{id_user}.json', 'w', encoding='utf-8') as file:
+        file.write(json.dumps(result))
+
 

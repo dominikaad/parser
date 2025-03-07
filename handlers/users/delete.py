@@ -12,7 +12,8 @@ async def reg_start(message: Message):
         return
     cursor.execute("SELECT id_task FROM users WHERE id = (?)", [id_user])
     b = cursor.fetchall()
-    scheduler.remove_job(b[0])
+    scheduler.remove_job(b[0][0])
     cursor.execute(
-        "DELETE * FROM users WHERE id = (?) ", [id_user])
+        "DELETE  FROM users WHERE id = (?) ", [id_user])
     con.commit()
+    await message.answer(text='Ваша ссылка удалена')
