@@ -4,6 +4,7 @@ from loader import *
 import handlers.users.start
 import handlers.users.add
 import handlers.users.delete
+import handlers.users.list
 from script.update_task import update_bot
 
 

@@ -31,22 +31,23 @@ def parse_website(url, class_names, inner_class_name):
         return parser_data
 
 
-async def parser_update(user_id, bot: Bot):
-    cursor.execute("SELECT * FROM users WHERE id = (?)", [user_id])
+async def parser_update(user_id, desc, bot: Bot):
+    cursor.execute("SELECT * FROM users WHERE id = (?) AND description = (?)", [user_id, desc])
     a = cursor.fetchall()
     class_names = 'styles_wrapper__5FoK7'
     inner_class_name = "styles_secondary__MzdEb"
     url = a[0][1]
     result = parse_website(url, class_names, inner_class_name)[:5]
-    with open(f'data/{user_id}.json', 'r', encoding='utf-8') as file:
+    with open(f'data/{user_id}_{desc}.json', 'r', encoding='utf-8') as file:
         old_result = json.loads(file.read())
 
     new_hran = []
     for item in result:
         if item not in old_result:
-            new_hran.append(result)
+            new_hran.append(item)
+    print(new_hran)
     if new_hran:
-        with open(f'data/{user_id}.json', 'w', encoding='utf-8') as file:
+        with open(f'data/{user_id}_{desc}.json', 'w', encoding='utf-8') as file:
             file.write(json.dumps(result))
         for mess in new_hran:
             builder = InlineKeyboardBuilder()
